@@ -1,20 +1,23 @@
 import mysql.connector
 
-conn = mysql.connector.connect(
-    host="104.198.31.98",
-    user="admin",
-    password="StrongPassw0rd!",
-    database="user_profile_db"
-)
-
-if conn.is_connected():
-    print("Connected to Cloud SQL!")
-    cur = conn.cursor()
-    cur.execute("SHOW DATABASES;")
-    for db in cur.fetchall():
-        print(db)
-    cur.close()
-    conn.close()
-else:
-    print("Connection failed.")
-
+try:
+    conn = mysql.connector.connect(
+        host="136.115.72.72",
+        user="admin",
+        password="Your$trongP@ssw0rd",
+        database="user_profile_db",
+        port=3306,
+        connection_timeout=10
+    )
+    if conn.is_connected():
+        print("Connected to MySQL on GCP VM!")
+        cur = conn.cursor()
+        cur.execute("SHOW DATABASES;")
+        for (db_name,) in cur.fetchall():
+            print(db_name)
+finally:
+    try:
+        cur.close()
+        conn.close()
+    except Exception:
+        pass
